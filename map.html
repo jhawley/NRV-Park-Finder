@@ -149,7 +149,7 @@
                         if(data[i].id == parkId) {
                             var targetMarker = L.marker([data[i].point_location.coordinates[1], data[i].point_location.coordinates[0]]).addTo(map);
                             targetMarker.bindPopup(
-                                data[i].park_name + "<br /><a href='park.html?id="+parkId+"'>More Information</a>"
+                                data[i].park_name + "<br /><a class='showPark' rel='"+parkId+"''>More Information</a>"
                             ).openPopup();
                             $('#mapid').height($('body').height()*.95+'px');
                             map.invalidateSize();
@@ -167,6 +167,10 @@
                     alert(err);
                 });
             }
+            
+            $(document).on('click','.showPark', function(e) {
+                window.location = "park.html?id=" + e.target.attributes.rel.value;
+            });
             
             $('#toolbar .hamburger').on('click', function() {
                 $(this).parent().toggleClass('open');

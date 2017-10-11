@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     </head>
-    <body style="display:none;">
+    <body>
         <div class="jumbotron header-bg">
             <h1 style="color:white; background-color:black; opacity:0.7;">NRV Park Search</h1>
         </div>
@@ -26,22 +26,19 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script type="text/javascript">
             function showInfo(park) {
-                var parkInfo = "<div class='parkInfo' id='info"+park.id+"'><dl>";
-                var url;
+                var parkInfo = "";
                 Object.keys(park).map(function(key) {
                     if(park[key] == null || park[key] == '' || ['point_location', 'geojson', 'osm_info'].indexOf(key) >= 0) {
                         return;
                     }
-                    parkInfo += "<dt>"+key.toUpperCase().replace(new RegExp('_', 'g'), ' ')+"</dt>";
-                    parkInfo += "<dd>"+park[key]+"</dd>";
                     if(key == 'url') {
-                        url = park[key];
+                        park[key] = '<a href="' + park[key] + '">' + park[key] + '</a>';
                     }
+                    parkInfo += '<div class="panel panel-default"><div class="panel-heading">'+key.toUpperCase().replace(new RegExp('_', 'g'), ' ')+"</div>";
+                    parkInfo += '<div class="panel-body">'+park[key]+"</div></div>";
                 });
-                
-                parkInfo += "</dl></div>";
+                console.log(parkInfo);
                 $("#parkInfo").append(parkInfo);
-                $("body").show();
             }
             
             function getParkById(parkId){

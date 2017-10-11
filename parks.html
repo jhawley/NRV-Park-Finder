@@ -56,7 +56,7 @@ and open the template in the editor.
                 });
             }
             
-            $('#page2').on('pagecreate', function() {
+            $(document).ready(function() {
                 var map = createMap();
                 if(getUrlVars()["location"] == "on") {
                     if(detectRefresh())

@@ -109,7 +109,7 @@
                 </div>
                 <div id="tourstops">
                   <form style="font-weight:bold;">
-                       <input id="googleMaps" type="button" value="Open Google Maps Directions" />
+                       <input class="gmaps" id="googleMaps" type="button" value="Open Google Maps Directions" />
                        <input id="back" type="button" value="Go Back to Park List" onclick="window.history.back();"/>
                        <input id="command" type="checkbox" checked="checked"/><label id="command-label" for="command">Update Location Real-Time</label>
                   </form>
@@ -149,13 +149,14 @@
                         if(data[i].id == parkId) {
                             var targetMarker = L.marker([data[i].point_location.coordinates[1], data[i].point_location.coordinates[0]]).addTo(map);
                             targetMarker.bindPopup(
-                                data[i].park_name + "<br /><a class='showPark' rel='"+parkId+"''>More Information</a>"
+                                data[i].park_name + "<br /><br /><a class='showPark' href='#' rel='" + parkId + "''>More Information</a><br /><br /><a class='gmaps' href='#'>Google Maps Directions</a>"
                             ).openPopup();
                             $('#mapid').height($('body').height()*.95+'px');
                             map.invalidateSize();
                             var group = new L.featureGroup([currentMarker, targetMarker]);
                             map.fitBounds(group.getBounds().pad(0.3));
-                            $('#googleMaps').button().click(function(){
+                            $('#googleMaps').button();
+                            $('.gmaps').click(function(){
                                 window.location = getGoogleMapsLink([getUrlVars()["lat"], getUrlVars()["lon"]], [data[i].point_location.coordinates[1],data[i].point_location.coordinates[0]]);
                             });
                             return data[i];
